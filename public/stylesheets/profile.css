@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+button {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+}
+
+.profile-box {
+  margin: 20px auto;
+  min-height: 380px;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  padding: 30px 30px;
+  gap: 15px;
+}
+
+.profile-circle {
+  margin-top: 2px;
+  height: 120px;
+  width: 120px;
+  border-radius: 10px;
+  box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-circle img {
+  width: 115px;
+  height: 115px;
+  object-fit: cover; /* Maintain aspect ratio and cover the entire container */
+  object-position: center center;
+  border-radius: 50%;
+}
+
+.profile-info {
+  min-height: 50px;
+  width: 100%;
+  margin: 10px 0px;
+  line-height: 25px;
+}
+
+.profile-info p {
+  color: #7c8293;
+  font-size: 14px;
+}
+.profile-info .following {
+  color: black;
+  font-size: 16px;
+}
+
+.btns {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+}
+
+.btns button {
+  background-color: rgba(214, 214, 214, 0.712);
+  border: none;
+  outline: none;
+  height: 35px;
+  width: 100%;
+  border-radius: 40px;
+  /* box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1; */
+  cursor: pointer;
+}
+
+.btns button:hover {
+  background: none;
+  border: none;
+  background: rgb(255, 255, 255);
+  outline: none;
+  height: 35px;
+  width: 100%;
+  border-radius: 40px;
+  box-shadow: inset -2px -2px 3px #ffffff, inset 2px 2px 3px #ceced1;
+}
+.pin-section {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+
+.pin-section .card {
+  width: 220px;
+  height: 300px;
+}
+.pin-section img {
+  height: 250px;
+  width: auto;
+  object-fit: cover;
+}
+.pin-section .card-body {
+  height: 48px;
+  background-color: #eeeeee;
+  border-radius: 0 0 7px 7px;
+}
+.pin-section .card-title {
+  /* Set the maximum height and hide overflow */
+  max-height: 48px; /* Same height as the card-body */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+.logout {
+  background-color: #b90710;
+  margin: 10px;
+  color: white;
+  padding: 6px 20px;
+  border-radius: 20px;
+}
+
+.logout a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logout:hover {
+  background-color: #7a060b;
+  color: white;
+}
+.fa-pinterest {
+  font-size: 16px;
+}

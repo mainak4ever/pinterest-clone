@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="/stylesheets/profile.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <button class="logout"><a href="/logout">Logout</a></button>
+      <div class="profile-box">
+        <div class="profile-circle">
+          <img
+            src="https://images.unsplash.com/photo-1700317440744-a126fc87b900?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1OHx8fGVufDB8fHx8fA%3D%3D"
+            alt=""
+          />
+        </div>
+
+        <div class="profile-info">
+          <h4><%= user.fullname %></h4>
+          <p><i class="fa-brands fa-pinterest"></i> <%= user.username %></p>
+          <p class="following">0 Following</p>
+        </div>
+
+        <div class="btns">
+          <button>Share</button>
+          <button>Edit Profile</button>
+        </div>
+      </div>
+      <div class="pin-section">
+        <div class="card">
+          <img
+            src="https://images.unsplash.com/photo-1701261026789-aca18e71ae4b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxM3x8fGVufDB8fHx8fA%3D%3D"
+            class="card-img-top"
+            alt="img"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Merry Christmas</h5>
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+          </div>
+        </div>
+
+        <div class="card">
+          <img
+            src="https://images.unsplash.com/photo-1682686580849-3e7f67df4015?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwzMXx8fGVufDB8fHx8fA%3D%3D"
+            class="card-img-top"
+            alt="img"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Scuba Diving</h5>
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+  <script
+    src="https://kit.fontawesome.com/b5328c2db7.js"
+    crossorigin="anonymous"
+  ></script>
+</html>

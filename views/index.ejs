@@ -2,10 +2,78 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="container">
+      <div class="content">
+        <!--pinterest logo-->
+        <img
+          src="https://i.pinimg.com/originals/d3/d1/75/d3d175e560ae133f1ed5cd4ec173751a.png"
+          alt="pin logo"
+          class="img1"
+        />
+        <p class="header">Grow your business</p>
+        <p>Get in front of 400 million people looking to buy, make, and do.</p>
+        <br />
+
+        <form action="/register" method="post">
+          <div class="inp-div">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              class="detail"
+            />
+          </div>
+          <div class="inp-div">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Username"
+              class="detail"
+            />
+          </div>
+          <div class="inp-div">
+            <label for="fullName">Full Name:</label>
+            <input
+              type="text"
+              id="fullname"
+              name="fullname"
+              placeholder="Full name"
+              class="detail"
+            />
+          </div>
+          <div class="inp-div">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              class="detail"
+            />
+          </div>
+          <button type="submit" class="btn int">Create account</button>
+        </form>
+
+        <button class="btn ggl">
+          <a href="/login">Log into existing account</a>
+        </button>
+
+        <footer>
+          <p>
+            By continuing, you agree to Pinterest's
+            <b>Terms of Service</b> and acknowledge you've read our
+            <b>Privacy Policy, Notice at collection</b>
+          </p>
+        </footer>
+      </div>
+    </div>
+    <!-- <a href="" class="upbtn">Sign up</a> -->
   </body>
 </html>
