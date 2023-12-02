@@ -3,8 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap demo</title>
+    <title>My Pinterest</title>
+    <link
+      rel="shortcut icon"
+      href="/images/pinterestLogo.png"
+      type="image/x-icon"
+    />
+
     <link rel="stylesheet" href="/stylesheets/create.css" />
+    <link rel="stylesheet" href="/stylesheets/navbar.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -19,12 +26,18 @@
       function previewImage() {
         var imgPrev = document.querySelector("#imagePreview");
         var uploadBtn = document.querySelector(".upload-btn");
-        var preview = document.querySelector("img");
         var file = document.querySelector("input[type=file]").files[0];
         var reader = new FileReader();
 
         reader.onloadend = function () {
+          var preview = document.createElement("img");
           preview.src = reader.result;
+          preview.setAttribute("alt", "post image");
+          var existingImg = imgPrev.querySelector("img");
+          if (existingImg) {
+            imgPrev.removeChild(existingImg);
+          }
+          imgPrev.appendChild(preview);
           uploadBtn.style.display = "none";
           imgPrev.style.border = "none";
         };
@@ -32,8 +45,12 @@
         if (file) {
           reader.readAsDataURL(file);
         } else {
-          preview.src = "";
-          preview.alt = "";
+          var existingImg = imgPrev.querySelector("img");
+          if (existingImg) {
+            imgPrev.removeChild(existingImg);
+          }
+          uploadBtn.style.display = "flex";
+          imgPrev.style.border = "2px dashed rgb(119, 119, 119)";
         }
       }
 
@@ -49,6 +66,52 @@
     </script>
   </head>
   <body>
+    <div class="header">
+      <img
+        src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/pinterest-round-color-icon.png"
+        class="icon pinterest-icon"
+      />
+      <ul class="navigation">
+        <li><a href="/">Home</a></li>
+        <li><a href="/">Explore</a></li>
+        <li><a href="/create">Create</a></li>
+      </ul>
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <!-- <img
+          src="https://www.brilliantlightingcenter.com/data/images/icons/search.svg"
+          class="search-icon"
+        /> -->
+        <input type="text" placeholder="Search" />
+      </div>
+      <div class="nav-icons">
+        <i class="fa-solid fa-bell nav-icon"></i>
+        <i class="fa-solid fa-comment-dots nav-icon"></i>
+        <!-- <img
+          src="https://uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/bell-icon.png"
+          class="icon nav-icon"
+        />
+        <img
+          src="https://uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/speech-bubble-black-icon.png"
+          class="icon nav-icon"
+        />
+        <img
+          src="https://uxwing.com/wp-content/themes/uxwing/download/arrow-direction/angle-bottom-icon.png"
+          class="icon nav-icon arrow-icon"
+        /> -->
+        <div class="dropdown">
+          <button class="dropbtn">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="/">Home</a>
+            <a href="/profile">Profile</a>
+            <a href="#services">Settings</a>
+            <a href="/logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="top-bar">
         <h1>Create Pin</h1>
@@ -67,7 +130,6 @@
           /> -->
 
           <div id="imagePreview" onclick="connectFileInput()">
-            <img src="" alt="" />
             <div class="upload-btn">
               <i class="fa-solid fa-circle-arrow-up"></i>
               <p>Choose a file here</p>
@@ -79,7 +141,11 @@
           <button class="img-url">Save from URL</button>
         </div>
         <div class="details">
-          <form action="" method="">
+          <form
+            action="/createpost"
+            method="post"
+            enctype="multipart/form-data"
+          >
             <input
               type="file"
               name="image"
