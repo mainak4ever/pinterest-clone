@@ -25,7 +25,7 @@ router.get("/", async function (req, res, next) {
   // console.log(posts);
   const isAuth = req.isAuthenticated();
   // console.log(isAuth);
-  res.render("feed", { posts, isAuth });
+  res.render("index", { posts, isAuth });
 });
 
 router.get("/create", isLoggedIn, function (req, res, next) {
