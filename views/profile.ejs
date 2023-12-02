@@ -72,20 +72,23 @@
           <button>Edit Profile</button>
         </div>
       </div>
-      <div class="pin-section">
-        <% user.posts.forEach(function(post){%>
-        <div class="card">
-          <img
-            src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>"
-            class="card-img-top"
-            alt="post-img"
-          />
-          <div class="card-body">
-            <h5 class="card-title"><%= post.title %></h5>
+      <div class="dashboard-section">
+        <div class="dash-title"><h6>Created</h6></div>
+        <div class="pin-section">
+          <% user.posts.forEach(function(post){%>
+          <div class="card">
+            <img
+              src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>"
+              class="card-img-top"
+              alt="post-img"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= post.title %></h5>
+            </div>
           </div>
-        </div>
 
-        <%}) %>
+          <%}) %>
+        </div>
       </div>
     </div>
 

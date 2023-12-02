@@ -115,7 +115,7 @@ body {
 }
 .pin-section .card-body {
   height: 48px;
-  background-color: #eeeeee;
+  background-color: #eeeeeea9;
   border-radius: 0 0 7px 7px;
 }
 .pin-section .card-title {
@@ -124,6 +124,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; /* Prevent text from wrapping */
+  text-align: center;
 }
 .logout {
   background-color: #b90710;
@@ -147,4 +148,9 @@ body {
 }
 .fa-pinterest {
   font-size: 16px;
+}
+
+.dash-title {
+  margin: 50px auto;
+  text-align: center;
 }
