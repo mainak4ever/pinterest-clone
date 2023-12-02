@@ -10,6 +10,8 @@ const expressSession = require("express-session");
 const passport = require("passport");
 const flash = require("connect-flash");
 
+require("dotenv").config();
+
 var app = express();
 
 // view engine setup
@@ -18,7 +20,7 @@ app.set("view engine", "ejs");
 
 app.use(
   expressSession({
-    secret: "secret",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
   })
