@@ -13,6 +13,8 @@ passport.use(new localStrategy(userModel.authenticate()));
 
 const upload = require("./multer.js");
 
+const textToImage = require("text-to-image");
+
 /* GET home page. */
 router.get("/signup", isNotLoggedIn, function (req, res, next) {
   res.render("signup");
@@ -38,6 +40,37 @@ router.get("/profile", isLoggedIn, async function (req, res, next) {
     .populate("posts");
   // console.log(user);
   res.render("profile", { user });
+});
+
+// router.get("/post/:id", async function (req, res, next) {
+//   const isAuth = req.isAuthenticated();
+//   const postId = req.params.id;
+//   const post = await postModel.findOne({ _id: postId }).populate("user");
+//   res.render("postpage", { post, isAuth });
+// });
+router.get("/post/:id", async function (req, res, next) {
+  try {
+    const isAuth = req.isAuthenticated();
+    const postId = req.params.id;
+
+    // Log the postId for debugging
+    console.log("Post ID:", postId);
+
+    const post = await postModel.findOne({ _id: postId }).populate("user");
+    console.log(post);
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+
+    res.render("postpage", { post, isAuth });
+  } catch (err) {
+    // Log any errors that occurred during post retrieval
+    console.error("Error fetching post:", err);
+    // Handle the error, render an error page, or send an error response
+    res.status(500).send("Error fetching post");
+    // You might want to call `next(err)` if using error handling middleware
+    // next(err);
+  }
 });
 
 router.post(
@@ -70,9 +103,32 @@ router.post(
   }
 );
 
-router.post("/register", function (req, res, next) {
+router.post("/register", async function (req, res, next) {
   const { username, email, fullname } = req.body;
-  const userData = new userModel({ username, email, fullname });
+
+  const firstLetter = fullname.charAt(0).toUpperCase();
+
+  const dataUri = await textToImage.generate(`${firstLetter}`, {
+    debug: true,
+    maxWidth: 240,
+    fontSize: 200,
+    fontFamily: "Arial",
+    margin: 40,
+    bgColor: "#d8d8d8",
+    fileType: "jpeg",
+  });
+
+  const defaultImage = {
+    data: Buffer.from(dataUri.split("base64,")[1], "base64"),
+    contentType: "image/jpeg", // Set the content type of the image
+  };
+
+  const userData = new userModel({
+    username,
+    email,
+    fullname,
+    dp: defaultImage,
+  });
 
   userModel.register(userData, req.body.password).then(function () {
     passport.authenticate("local")(req, res, function () {

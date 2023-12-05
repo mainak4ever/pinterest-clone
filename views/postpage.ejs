@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Pinterest</title>
+    <link
+      rel="shortcut icon"
+      href="/images/pinterestLogo.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/stylesheets/navbar.css" />
+    <link rel="stylesheet" href="/stylesheets/postpage.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/b5328c2db7.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="header">
+      <img
+        src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/pinterest-round-color-icon.png"
+        class="icon pinterest-icon"
+      />
+      <ul class="navigation">
+        <li><a href="/">Home</a></li>
+        <li><a href="/">Explore</a></li>
+        <li><a href="/create">Create</a></li>
+      </ul>
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" placeholder="Search" />
+      </div>
+      <div class="nav-icons">
+        <i class="fa-solid fa-bell nav-icon"></i>
+        <i class="fa-solid fa-comment-dots nav-icon"></i>
+
+        <div class="dropdown">
+          <button class="dropbtn">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="/">Home</a>
+            <a href="/profile">Profile</a>
+            <a href="#services">Settings</a>
+            <% if(isAuth){%>
+            <a href="/logout">Logout</a>
+            <% } else { %>
+            <a href="/login">Login</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="left-div">
+        <img
+          src="https://i.pinimg.com/564x/1c/bb/63/1cbb63d22411b9d74880a64d0a5de92e.jpg"
+          alt=""
+        />
+      </div>
+      <div class="right-div">
+        <div class="icons-div">
+          <div class="icons">
+            <i class="fa-solid fa-ellipsis"></i>
+            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+            <i class="fa-solid fa-link"></i>
+          </div>
+          <button class="save-btn">Save</button>
+        </div>
+        <div class="right-div-content">
+          <a href="#">templatemonster.com</a>
+          <h2>Web Templates | HTML5 Website Templates</h2>
+          <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate
+            exercitationem neque itaque expedita debitis magnam ullam similique
+            accusamus quam soluta beatae obcaecati aspernatur optio animi libero
+            excepturi, voluptate, labore velit.
+          </p>
+          <div class="profile-div">
+            <div class="profile-wrapper">
+              <div class="img-holder">
+                <img src="" alt="" />
+              </div>
+              <div class="details-holder">
+                <h5>Mainak Mitra</h5>
+                <p><span>4.8k</span> followers</p>
+              </div>
+            </div>
+            <div class="follow-btn">
+              <button>Follow</button>
+            </div>
+          </div>
+          <div class="comment-section">
+            <h4>Comments</h4>
+            <br />
+            <div class="comments">
+              <div class="comment">
+                <div class="img-holder">
+                  <img src="" alt="" />
+                </div>
+                <div class="details-holder">
+                  <h6>Mainak Mitra</h6>
+                  <p>hi this is my comment</p>
+                </div>
+              </div>
+              <div class="comment">
+                <div class="img-holder">
+                  <img src="" alt="" />
+                </div>
+                <div class="details-holder">
+                  <h6>Mainak Mitra</h6>
+                  <p>hi this is my comment</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="add-comment-section">
+          <div class="comment-stats">
+            <h5><span>0</span> Comments</h5>
+            <div class="like-icon"><i class="fa-regular fa-heart"></i></div>
+          </div>
+          <div class="add-comment">
+            <div class="img-holder">
+              <img src="" alt="" />
+            </div>
+            <input type="text" placeholder="Add a comment" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

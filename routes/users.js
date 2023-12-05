@@ -25,9 +25,28 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   dp: {
-    type: String,
+    data: Buffer,
+    contentType: String,
   },
   posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post", // Assuming 'Post' is another Mongoose model
+    },
+  ],
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  saved: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post", // Assuming 'Post' is another Mongoose model

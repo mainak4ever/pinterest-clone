@@ -56,12 +56,14 @@
     <div class="grid">
       <% posts.forEach(post => { %>
 
-      <div class="grid-item">
-        <img
-          src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>"
-        />
-        <h3><%= post.title %></h3>
-      </div>
+      <a href="/post/<%= post._id.toString()%>"
+        ><div class="grid-item">
+          <img
+            src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>"
+          />
+          <h3><%= post.title %></h3>
+        </div></a
+      >
 
       <% }) %>
 
