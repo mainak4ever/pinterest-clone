@@ -36,6 +36,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  cursor: pointer;
 }
 
 .profile-circle img {
@@ -153,4 +155,25 @@ body {
 .dash-title {
   margin: 50px auto;
   text-align: center;
+}
+
+.upload-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+.upload-btn i {
+  font-size: 30px;
+}
+.profile-circle:hover img {
+  opacity: 0.5;
+}
+.profile-circle:hover .upload-btn {
+  opacity: 0.9;
 }

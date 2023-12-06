@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
 .post {
   width: 1000px;
   height: 1000px;
@@ -34,8 +38,15 @@
   flex-direction: column;
   gap: 20px;
   height: calc(100% - 80px - 140px);
+  overflow: auto;
+  scroll-behavior: smooth;
+}
+.right-div-content::-webkit-scrollbar {
+  width: 0;
+  background: transparent; /* Optional: This will hide the scrollbar completely */
 }
 .right-div-content a {
+  text-decoration: underline;
   color: rgb(83, 83, 83);
 }
 .icons-div {
@@ -114,10 +125,15 @@
   font-weight: 600;
   border-radius: 50px;
 }
+.follow-btn a {
+  text-decoration: none;
+  color: inherit;
+}
 .follow-btn button:hover {
   background-color: #a8a8a8;
 }
 .comments {
+  /* margin-bottom: 130px; */
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -183,4 +199,26 @@
   outline: none;
   background-color: #d8d8d8;
   border-radius: 30px;
+}
+.red-heart {
+  color: rgb(241, 39, 73);
+}
+.likebox {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.likebox p {
+  margin: 0;
+  padding: 0;
+}
+.likebox .red-icon {
+  background-color: rgba(255, 192, 203, 0.596);
+}
+
+.likebox .red-icon:hover {
+  background-color: rgba(241, 39, 73, 0.329);
 }

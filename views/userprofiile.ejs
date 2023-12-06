@@ -19,14 +19,27 @@
       crossorigin="anonymous"
     />
     <script>
-      function connectFileInput() {
-        var fileInput = document.querySelector("input[type=file]");
-        fileInput.click();
-      }
+      function showFollow(followingArr) {
+        const currentPath = window.location.pathname;
 
-      function saveImage() {
-        var imgSubmitBtn = document.querySelector("#img-submit-btn");
-        imgSubmitBtn.click();
+        const profileId = currentPath.split("/")[2];
+
+        const isFollowing = followingArr.some(
+          (id) => id.toString() === profileId
+        );
+
+        let buttonHTML;
+        if (isFollowing) {
+          buttonHTML = "<button>Following</button>";
+        } else {
+          buttonHTML = `
+            <button class="logout">
+                <a href="/follow/${profileId}">Follow</a>
+            </button>
+            `;
+        }
+
+        return buttonHTML;
       }
     </script>
   </head>
@@ -63,32 +76,13 @@
       </div>
     </div>
     <div class="container">
-      <button class="logout"><a href="/logout">Logout</a></button>
       <div class="profile-box">
-        <div class="profile-circle" onclick="connectFileInput()">
+        <div class="profile-circle">
           <img
             src="data:<%= user.dp.contentType %>;base64,<%= user.dp.data.toString('base64') %>"
             alt=""
           />
-          <div class="upload-btn">
-            <i class="fa-solid fa-circle-arrow-up"></i>
-          </div>
         </div>
-
-        <form action="/updateDp" method="post" enctype="multipart/form-data">
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onchange="saveImage()"
-            style="display: none"
-          />
-          <button
-            type="submit"
-            id="img-submit-btn"
-            style="display: none"
-          ></button>
-        </form>
 
         <div class="profile-info">
           <h4><%= user.fullname %></h4>
@@ -98,7 +92,11 @@
 
         <div class="btns">
           <button>Share</button>
-          <button>Edit Profile</button>
+          <% showFollow(user.following) %>
+
+          <!-- <button class="logout">
+            <a href="/follow/<%= user._id%>">Follow</a>
+          </button> -->
         </div>
       </div>
       <div class="dashboard-section">

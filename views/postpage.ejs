@@ -22,6 +22,90 @@
       src="https://kit.fontawesome.com/b5328c2db7.js"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function downloadImage() {
+        const postImage = document.querySelector(".left-div img");
+        const imgUrl = postImage.src;
+        const link = document.createElement("a");
+        link.href = imgUrl;
+        link.setAttribute("download", "post_image.jpg");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function copyUrl() {
+        const urlToCopy = window.location.href;
+
+        navigator.clipboard
+          .writeText(urlToCopy)
+          .then(() => {
+            alert("URL copied!");
+          })
+          .catch((err) => {
+            console.error("Error copying URL: ", err);
+          });
+      }
+
+      function followUser(createdUser) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = `/follow/${createdUser}`;
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+
+      function addLike(currentUserId, postId) {
+        fetch("/addlike", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ currentUserId, postId }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            location = location.href;
+            // Handle the response as needed
+            // For example, update the UI to reflect the 'like' action
+          })
+          .catch((error) => {
+            // Handle any errors that occurred during the fetch
+            console.error("Error adding like:", error);
+            // You can also update the UI to reflect the error
+          });
+      }
+
+      function addComment(event, postId, currentUserId) {
+        if (event.key === "Enter") {
+          const commentText = event.target.value;
+
+          fetch("/addcomment", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ postId, commentText, currentUserId }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+            })
+            .catch((error) => {
+              console.error("Error adding comment:", error);
+              // Handle any errors that occurred during the fetch
+            });
+          event.target.value = "";
+          setTimeout(() => {
+            location.reload();
+          }, 300);
+        }
+      }
+    </script>
   </head>
   <body>
     <div class="header">
@@ -63,78 +147,129 @@
     <div class="post">
       <div class="left-div">
         <img
-          src="https://i.pinimg.com/564x/1c/bb/63/1cbb63d22411b9d74880a64d0a5de92e.jpg"
-          alt=""
+          src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>"
+          alt="post image"
         />
       </div>
       <div class="right-div">
         <div class="icons-div">
           <div class="icons">
             <i class="fa-solid fa-ellipsis"></i>
-            <i class="fa-solid fa-arrow-up-from-bracket"></i>
-            <i class="fa-solid fa-link"></i>
+            <i
+              class="fa-solid fa-arrow-up-from-bracket"
+              onclick="downloadImage()"
+            ></i>
+            <i class="fa-solid fa-link" onclick="copyUrl()"></i>
           </div>
           <button class="save-btn">Save</button>
         </div>
         <div class="right-div-content">
-          <a href="#">templatemonster.com</a>
-          <h2>Web Templates | HTML5 Website Templates</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate
-            exercitationem neque itaque expedita debitis magnam ullam similique
-            accusamus quam soluta beatae obcaecati aspernatur optio animi libero
-            excepturi, voluptate, labore velit.
-          </p>
+          <a href="#"><%= post.link %></a>
+          <h2><%= post.title %></h2>
+          <p><%= post.description %></p>
           <div class="profile-div">
             <div class="profile-wrapper">
               <div class="img-holder">
-                <img src="" alt="" />
+                <img
+                  src="data:<%= post.user.dp.contentType %>;base64,<%= post.user.dp.data.toString('base64') %>"
+                  alt=""
+                />
               </div>
               <div class="details-holder">
-                <h5>Mainak Mitra</h5>
-                <p><span>4.8k</span> followers</p>
+                <h5><%= post.user.fullname %></h5>
+                <p>
+                  <span>
+                    <%= post.user.followers.length > 1000 ?
+                    `${(post.user.followers.length / 1000).toFixed(2)}k` :
+                    post.user.followers.length %>
+                  </span>
+                  followers
+                </p>
               </div>
             </div>
             <div class="follow-btn">
-              <button>Follow</button>
+              <% let buttonHTML; if (isAuth) { const isFollowing =
+              post.user.followers.some((id) => id.toString() ===
+              currentUserModel._id.toString()); if (isFollowing) { buttonHTML =
+              "<button>Following</button>"; } else { buttonHTML = `<button
+                onclick="followUser('${post.user._id}')"
+              >
+                Follow</button
+              >`; } } else { buttonHTML = `<button
+                onclick="followUser('${post.user._id}')"
+              >
+                Follow</button
+              >`; } %> <%- buttonHTML %>
             </div>
           </div>
           <div class="comment-section">
             <h4>Comments</h4>
             <br />
             <div class="comments">
+              <% if (post.comments.length > 0) { %> <%
+              post.comments.forEach(comment => { %>
               <div class="comment">
                 <div class="img-holder">
-                  <img src="" alt="" />
+                  <% if (comment.author.dp && comment.author.dp.data) { %>
+                  <img
+                    src="data:<%= comment.author.dp.contentType %>;base64,<%= comment.author.dp.data.toString('base64') %>"
+                    alt="Profile Image"
+                  />
+                  <% } else { %>
+                  <img src="" alt="Default Profile Image" />
+                  <% } %>
                 </div>
                 <div class="details-holder">
-                  <h6>Mainak Mitra</h6>
-                  <p>hi this is my comment</p>
+                  <h6><%= comment.author.fullname %></h6>
+                  <p><%= comment.text %></p>
                 </div>
               </div>
-              <div class="comment">
-                <div class="img-holder">
-                  <img src="" alt="" />
-                </div>
-                <div class="details-holder">
-                  <h6>Mainak Mitra</h6>
-                  <p>hi this is my comment</p>
-                </div>
-              </div>
+              <% }) %> <% } else { %>
+              <p>No comments yet</p>
+              <% } %>
             </div>
           </div>
         </div>
 
         <div class="add-comment-section">
           <div class="comment-stats">
-            <h5><span>0</span> Comments</h5>
-            <div class="like-icon"><i class="fa-regular fa-heart"></i></div>
+            <h5><span><%= post.comments.length %></span> Comments</h5>
+            <div class="likebox">
+              <p>
+                <i class="fa-solid fa-heart red-heart"></i>
+                <%= post.likes.length > 1000 ? `${(post.likes.length /
+                1000).toFixed(2)}k` : post.likes.length %>
+              </p>
+              <% if (isAuth) { %> <% if
+              (post.likes.includes(currentUserModel._id)) { %>
+              <div class="like-icon red-icon">
+                <i class="fa-solid fa-heart red-heart"></i>
+              </div>
+              <% } else { %>
+              <div
+                class="like-icon"
+                onclick="addLike('<%= currentUserModel._id %>','<%= post._id %>')"
+              >
+                <i class="fa-regular fa-heart"></i>
+              </div>
+              <% } %> <% } else { %>
+              <div class="like-icon" onclick="alert('Please login to like')">
+                <i class="fa-regular fa-heart"></i>
+              </div>
+              <% } %>
+            </div>
           </div>
           <div class="add-comment">
             <div class="img-holder">
-              <img src="" alt="" />
+              <img
+                src="<%= isAuth ? `data:${currentUserModel.dp.contentType};base64,${currentUserModel.dp.data.toString('base64')}` : 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/512px-Windows_10_Default_Profile_Picture.svg.png?20221210150350' %>"
+                alt="<%= isAuth ? 'Profile Image' : 'Default Profile Image' %>"
+              />
             </div>
-            <input type="text" placeholder="Add a comment" />
+            <input type="text" placeholder="<%= isAuth && currentUserModel ?
+            'Add a comment' : 'Please log in to add a comment' %>" <%= !isAuth ?
+            'disabled' : '' %> onkeypress="addComment(event, '<%= post._id %>',
+            '<%= currentUserModel && currentUserModel._id %>')" />
           </div>
         </div>
       </div>
