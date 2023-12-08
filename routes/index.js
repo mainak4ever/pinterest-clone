@@ -4,6 +4,8 @@ const userModel = require("./users");
 const postModel = require("./posts.js");
 const { default: mongoose } = require("mongoose");
 const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+require("dotenv").config();
 
 const localStrategy = require("passport-local");
 passport.use(new localStrategy(userModel.authenticate()));
@@ -83,12 +85,6 @@ router.get("/userprofile/:id", async function (req, res, next) {
   res.render("userprofile", { user, isAuth, currentUserModel });
 });
 
-// router.get("/post/:id", async function (req, res, next) {
-//   const isAuth = req.isAuthenticated();
-//   const postId = req.params.id;
-//   const post = await postModel.findOne({ _id: postId }).populate("user");
-//   res.render("postpage", { post, isAuth });
-// });
 router.get("/post/:id", async function (req, res, next) {
   try {
     const isAuth = req.isAuthenticated();
@@ -281,6 +277,51 @@ router.post(
     res.redirect(redirectTo);
   }
 );
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//       callbackURL: "/auth/google/callback", // Adjust the callback URL based on your setup
+//     },
+//     async function (accessToken, refreshToken, profile, done) {
+//       try {
+//         let user = await User.findOne({ googleId: profile.id });
+
+//         if (user) {
+//           return done(null, user); // User found, return the user
+//         } else {
+//           const newUser = new User({
+//             fullname: profile.displayName,
+//             email: profile.emails[0].value, // Assuming Google returns the user's email
+//             // You may extract other relevant information from the profile object
+//             // Save the Google ID to identify the user for future logins
+//             googleId: profile.id,
+//           });
+
+//           const savedUser = await newUser.save();
+//           return done(null, savedUser); // New user created and saved, return the user
+//         }
+//       } catch (error) {
+//         return done(error); // Handle any errors that occur during the process
+//       }
+//     }
+//   )
+// );
+// router.get(
+//   "/auth/google",
+//   passport.authenticate("google", { scope: ["profile", "email"] })
+// );
+
+// // Google OAuth callback route (this URL should match the callbackURL from the GoogleStrategy)
+// router.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", { failureRedirect: "/login" }), // Redirect to '/login' on failure
+//   function (req, res) {
+//     // Successful authentication, redirect to a different route or send a response
+//     res.redirect("/profile");
+//   }
+// );
 
 router.get("/logout", isLoggedIn, function (req, res, next) {
   req.logout(function (err) {
