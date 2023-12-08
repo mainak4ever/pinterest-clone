@@ -22,7 +22,37 @@
       src="https://kit.fontawesome.com/b5328c2db7.js"
       crossorigin="anonymous"
     ></script>
+    <script src="/javascripts/navbar.js"></script>
     <script>
+      function addToSave(postId, currentUserId) {
+        fetch("/addtosave", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ currentUserId, postId }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok.");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Post added to saved:", data);
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem adding the post to saved:",
+              error
+            );
+            // Handle error scenarios
+          });
+        setTimeout(() => {
+          location.reload();
+        }, 200);
+      }
+
       function downloadImage() {
         const postImage = document.querySelector(".left-div img");
         const imgUrl = postImage.src;
@@ -120,7 +150,11 @@
       </ul>
       <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          placeholder="Search"
+          onkeyup="searchOnEnter(event)"
+        />
       </div>
       <div class="nav-icons">
         <i class="fa-solid fa-bell nav-icon"></i>
@@ -161,7 +195,20 @@
             ></i>
             <i class="fa-solid fa-link" onclick="copyUrl()"></i>
           </div>
+          <!-- <button class="save-btn">Save</button> -->
+          <% if (isAuth) { %> <% if (currentUserModel.saved.includes(post._id))
+          { %>
+          <button class="save-btn saved">Saved</button>
+          <% } else { %>
+          <button
+            class="save-btn"
+            onclick="addToSave('<%= post._id %>','<%= currentUserModel._id %>')"
+          >
+            Save
+          </button>
+          <% } %> <% } else { %>
           <button class="save-btn">Save</button>
+          <% } %>
         </div>
         <div class="right-div-content">
           <a href="#"><%= post.link %></a>
@@ -176,7 +223,9 @@
                 />
               </div>
               <div class="details-holder">
-                <h5><%= post.user.fullname %></h5>
+                <a href="/userprofile/<%=post.user._id%>"
+                  ><h5><%= post.user.fullname %></h5></a
+                >
                 <p>
                   <span>
                     <%= post.user.followers.length > 1000 ?
@@ -220,7 +269,9 @@
                   <% } %>
                 </div>
                 <div class="details-holder">
-                  <h6><%= comment.author.fullname %></h6>
+                  <a href="comment.author._id"
+                    ><h6><%= comment.author.fullname %></h6></a
+                  >
                   <p><%= comment.text %></p>
                 </div>
               </div>

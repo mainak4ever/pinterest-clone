@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="/javascripts/navbar.js"></script>
   </head>
 
   <body>
@@ -26,11 +27,11 @@
       </ul>
       <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <!-- <img
-          src="https://www.brilliantlightingcenter.com/data/images/icons/search.svg"
-          class="search-icon"
-        /> -->
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          placeholder="Search"
+          onkeyup="searchOnEnter(event)"
+        />
       </div>
       <div class="nav-icons">
         <i class="fa-solid fa-bell nav-icon"></i>

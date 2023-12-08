@@ -101,8 +101,12 @@ body {
   flex-direction: row;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
-
+.pin-section a {
+  text-decoration: none;
+  color: inherit;
+}
 .pin-section .card {
   width: 220px;
   height: 300px;
@@ -151,10 +155,22 @@ body {
 .fa-pinterest {
   font-size: 16px;
 }
-
+/* .container {
+  margin-bottom: 100px;
+} */
 .dash-title {
   margin: 50px auto;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.dash-title > div {
+  cursor: pointer;
+}
+.active-sec {
+  border-bottom: 2px solid black;
 }
 
 .upload-btn {
@@ -176,4 +192,13 @@ body {
 }
 .profile-circle:hover .upload-btn {
   opacity: 0.9;
+}
+.following {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.dot-sep {
+  font-size: 3px;
 }

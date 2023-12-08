@@ -35,6 +35,30 @@ router.get("/", async function (req, res, next) {
   res.render("index", { posts, isAuth });
 });
 
+router.get("/search", async (req, res, next) => {
+  const searchString = req.query.searchString;
+
+  try {
+    const posts = await postModel
+      .find({
+        $or: [
+          { title: { $regex: searchString, $options: "i" } },
+          { description: { $regex: searchString, $options: "i" } },
+          { board: { $regex: searchString, $options: "i" } },
+          { tags: { $regex: searchString, $options: "i" } },
+          // Add other fields you want to search here
+        ],
+      })
+      .sort({ createdAt: -1 });
+
+    const isAuth = req.isAuthenticated();
+
+    res.render("index", { posts, isAuth }); // Render the index view with posts and authentication info
+  } catch (error) {
+    res.render("error", { error }); // Render an error view if an error occurs
+  }
+});
+
 router.get("/create", isLoggedIn, function (req, res, next) {
   res.render("create");
 });
@@ -42,7 +66,8 @@ router.get("/create", isLoggedIn, function (req, res, next) {
 router.get("/profile", isLoggedIn, async function (req, res, next) {
   const user = await userModel
     .findOne({ username: req.session.passport.user })
-    .populate("posts");
+    .populate("posts")
+    .populate("saved");
   // console.log(user);
   res.render("profile", { user });
 });
@@ -51,8 +76,11 @@ router.get("/userprofile/:id", async function (req, res, next) {
   const isAuth = req.isAuthenticated();
   const userId = req.params.id;
   const user = await userModel.findOne({ _id: userId }).populate("posts");
+  const currentUserModel = await userModel.findOne({
+    username: req.session.passport.user,
+  });
   // console.log(user);
-  res.render("userprofile", { user, isAuth });
+  res.render("userprofile", { user, isAuth, currentUserModel });
 });
 
 // router.get("/post/:id", async function (req, res, next) {
@@ -104,6 +132,13 @@ router.post("/addlike", isLoggedIn, async function (req, res, next) {
 
   let previousPage = req.get("Referer") || "/";
   res.redirect(previousPage);
+});
+
+router.post("/addtosave", isLoggedIn, async function (req, res, next) {
+  const { currentUserId, postId } = req.body;
+  const user = await userModel.findOne({ _id: currentUserId });
+  user.saved.push(postId);
+  user.save();
 });
 
 router.post("/addcomment", isLoggedIn, async function (req, res, next) {

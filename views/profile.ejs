@@ -18,6 +18,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <script src="/javascripts/navbar.js"></script>
     <script>
       function connectFileInput() {
         var fileInput = document.querySelector("input[type=file]");
@@ -27,6 +28,41 @@
       function saveImage() {
         var imgSubmitBtn = document.querySelector("#img-submit-btn");
         imgSubmitBtn.click();
+      }
+
+      function toggleSection(section) {
+        const pinSection = document.querySelector(".pin-section");
+        const userPosts = `<% user.posts.forEach(function(post){ %>
+          <a href="/post/<%=post._id %>"><div class="card">
+                        <img src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>" class="card-img-top" alt="post-img"/>
+                        <div class="card-body">
+                          <h5 class="card-title"><%= post.title %></h5>
+                        </div>
+                      </div></a>
+                    <% }) %>`;
+
+        const userSaved = `<% user.saved.forEach(function(post){ %>
+          <a href="/post/<%=post._id %>"><div class="card"><div class="card">
+                        <img src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>" class="card-img-top" alt="post-img"/>
+                        <div class="card-body">
+                          <h5 class="card-title"><%= post.title %></h5>
+                        </div>
+                      </div></a>
+                    <% }) %>`;
+
+        if (section === "created") {
+          pinSection.innerHTML = userPosts;
+
+          // Add or remove 'active-sec' class for styling
+          document.querySelector(".created").classList.add("active-sec");
+          document.querySelector(".saved").classList.remove("active-sec");
+        } else if (section === "saved") {
+          pinSection.innerHTML = userSaved;
+
+          // Add or remove 'active-sec' class for styling
+          document.querySelector(".saved").classList.add("active-sec");
+          document.querySelector(".created").classList.remove("active-sec");
+        }
       }
     </script>
   </head>
@@ -43,7 +79,11 @@
       </ul>
       <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          placeholder="Search"
+          onkeyup="searchOnEnter(event)"
+        />
       </div>
       <div class="nav-icons">
         <i class="fa-solid fa-bell nav-icon"></i>
@@ -93,7 +133,11 @@
         <div class="profile-info">
           <h4><%= user.fullname %></h4>
           <p><i class="fa-brands fa-pinterest"></i> <%= user.username %></p>
-          <p class="following">0 Following</p>
+          <p class="following">
+            <span><%=user.following.length%> Following</span>
+            <span class="dot-sep"><i class="fa-solid fa-circle"></i></span>
+            <span><%=user.followers.length%> Followers</span>
+          </p>
         </div>
 
         <div class="btns">
@@ -102,21 +146,29 @@
         </div>
       </div>
       <div class="dashboard-section">
-        <div class="dash-title"><h6>Created</h6></div>
-        <div class="pin-section">
-          <% user.posts.forEach(function(post){%>
-          <div class="card">
-            <img
-              src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>"
-              class="card-img-top"
-              alt="post-img"
-            />
-            <div class="card-body">
-              <h5 class="card-title"><%= post.title %></h5>
-            </div>
+        <div class="dash-title">
+          <div class="created active-sec" onclick="toggleSection('created')">
+            <h6>Created</h6>
           </div>
-
-          <%}) %>
+          <div class="saved" onclick="toggleSection('saved')">
+            <h6>Saved</h6>
+          </div>
+        </div>
+        <div class="pin-section">
+          <% user.posts.forEach(function(post){ %>
+          <a href="/post/<%=post._id %>"
+            ><div class="card">
+              <img
+                src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>"
+                class="card-img-top"
+                alt="post-img"
+              />
+              <div class="card-body">
+                <h5 class="card-title"><%= post.title %></h5>
+              </div>
+            </div></a
+          >
+          <% }) %>
         </div>
       </div>
     </div>

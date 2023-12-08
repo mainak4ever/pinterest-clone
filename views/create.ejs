@@ -18,6 +18,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <script src="/javascripts/navbar.js"></script>
     <script
       src="https://kit.fontawesome.com/b5328c2db7.js"
       crossorigin="anonymous"
@@ -78,27 +79,17 @@
       </ul>
       <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <!-- <img
-          src="https://www.brilliantlightingcenter.com/data/images/icons/search.svg"
-          class="search-icon"
-        /> -->
-        <input type="text" placeholder="Search" />
+
+        <input
+          type="text"
+          placeholder="Search"
+          onkeyup="searchOnEnter(event)"
+        />
       </div>
       <div class="nav-icons">
         <i class="fa-solid fa-bell nav-icon"></i>
         <i class="fa-solid fa-comment-dots nav-icon"></i>
-        <!-- <img
-          src="https://uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/bell-icon.png"
-          class="icon nav-icon"
-        />
-        <img
-          src="https://uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/speech-bubble-black-icon.png"
-          class="icon nav-icon"
-        />
-        <img
-          src="https://uxwing.com/wp-content/themes/uxwing/download/arrow-direction/angle-bottom-icon.png"
-          class="icon nav-icon arrow-icon"
-        /> -->
+
         <div class="dropdown">
           <button class="dropbtn">
             <i class="fa-solid fa-chevron-down"></i>
@@ -121,14 +112,6 @@
       <hr />
       <div class="create-pin-wrapper">
         <div class="image-holder">
-          <!-- <input
-            type="file"
-            name="file"
-            accept="image/*"
-            onchange="previewImage()"
-            style="display: none"
-          /> -->
-
           <div id="imagePreview" onclick="connectFileInput()">
             <div class="upload-btn">
               <i class="fa-solid fa-circle-arrow-up"></i>

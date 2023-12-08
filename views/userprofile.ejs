@@ -18,28 +18,28 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <script src="/javascripts/navbar.js"></script>
     <script>
-      function showFollow(followingArr) {
-        const currentPath = window.location.pathname;
+      function followUser(followedUser) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = `/follow/${followedUser}`;
 
-        const profileId = currentPath.split("/")[2];
+        document.body.appendChild(form);
+        form.submit();
+      }
 
-        const isFollowing = followingArr.some(
-          (id) => id.toString() === profileId
-        );
+      function copyUrl() {
+        const urlToCopy = window.location.href;
 
-        let buttonHTML;
-        if (isFollowing) {
-          buttonHTML = "<button>Following</button>";
-        } else {
-          buttonHTML = `
-            <button class="logout">
-                <a href="/follow/${profileId}">Follow</a>
-            </button>
-            `;
-        }
-
-        return buttonHTML;
+        navigator.clipboard
+          .writeText(urlToCopy)
+          .then(() => {
+            alert("URL copied!");
+          })
+          .catch((err) => {
+            console.error("Error copying URL: ", err);
+          });
       }
     </script>
   </head>
@@ -56,7 +56,11 @@
       </ul>
       <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          placeholder="Search"
+          onkeyup="searchOnEnter(event)"
+        />
       </div>
       <div class="nav-icons">
         <i class="fa-solid fa-bell nav-icon"></i>
@@ -87,16 +91,28 @@
         <div class="profile-info">
           <h4><%= user.fullname %></h4>
           <p><i class="fa-brands fa-pinterest"></i> <%= user.username %></p>
-          <p class="following">0 Following</p>
+          <p class="following">
+            <span><%=user.following.length%> Following</span>
+            <span class="dot-sep"><i class="fa-solid fa-circle"></i></span>
+            <span><%=user.followers.length%> Followers</span>
+          </p>
         </div>
 
         <div class="btns">
-          <button>Share</button>
-          <% showFollow(user.following) %>
+          <button onclick="copyUrl()">Share</button>
 
-          <!-- <button class="logout">
-            <a href="/follow/<%= user._id%>">Follow</a>
-          </button> -->
+          <% let buttonHTML; if (isAuth) { const isFollowing =
+          user.followers.some((id) => id.toString() ===
+          currentUserModel._id.toString()); if (isFollowing) { buttonHTML =
+          "<button>Following</button>"; } else { buttonHTML = `<button
+            onclick="followUser('${user._id}')"
+          >
+            Follow</button
+          >`; } } else { buttonHTML = `<button
+            onclick="followUser('${user._id}')"
+          >
+            Follow</button
+          >`; } %> <%- buttonHTML %>
         </div>
       </div>
       <div class="dashboard-section">
