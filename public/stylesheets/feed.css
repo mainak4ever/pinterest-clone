@@ -123,13 +123,13 @@ img:hover {
 
 @media (min-width: 1000px) {
   .grid-item {
-    width: 33.333%;
+    width: 20%;
   }
 }
 
 @media (min-width: 1700px) {
   .grid-item {
-    width: 25%;
+    width: 20%;
   }
 }
 
