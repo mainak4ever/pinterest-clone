@@ -74,7 +74,11 @@
             <a href="/">Home</a>
             <a href="/profile">Profile</a>
             <a href="#services">Settings</a>
+            <% if(isAuth){%>
             <a href="/logout">Logout</a>
+            <% } else { %>
+            <a href="/login">Login</a>
+            <% } %>
           </div>
         </div>
       </div>
@@ -119,16 +123,18 @@
         <div class="dash-title"><h6>Created</h6></div>
         <div class="pin-section">
           <% user.posts.forEach(function(post){%>
-          <div class="card">
-            <img
-              src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>"
-              class="card-img-top"
-              alt="post-img"
-            />
-            <div class="card-body">
-              <h5 class="card-title"><%= post.title %></h5>
-            </div>
-          </div>
+          <a href="/post/<%=post._id %>">
+            <div class="card">
+              <img
+                src="data:<%= post.image.contentType %>;base64,<%= post.image.data.toString('base64') %>"
+                class="card-img-top"
+                alt="post-img"
+              />
+              <div class="card-body">
+                <h5 class="card-title"><%= post.title %></h5>
+              </div>
+            </div></a
+          >
 
           <%}) %>
         </div>

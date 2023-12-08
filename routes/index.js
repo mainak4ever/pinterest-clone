@@ -78,9 +78,13 @@ router.get("/userprofile/:id", async function (req, res, next) {
   const isAuth = req.isAuthenticated();
   const userId = req.params.id;
   const user = await userModel.findOne({ _id: userId }).populate("posts");
-  const currentUserModel = await userModel.findOne({
-    username: req.session.passport.user,
-  });
+  const currentUserModel = null;
+  if (isAuth) {
+    currentUserModel = await userModel.findOne({
+      username: req.session.passport.user,
+    });
+  }
+
   // console.log(user);
   res.render("userprofile", { user, isAuth, currentUserModel });
 });
