@@ -125,3 +125,19 @@ textarea {
   background-color: #7a060b;
   color: white;
 }
+
+@media (max-width: 1000px) {
+  .create-pin-wrapper {
+    width: 500px;
+    flex-direction: column;
+  }
+  .image-holder,
+  .details {
+    width: 100%;
+  }
+}
+@media (max-width: 500px) {
+  .create-pin-wrapper {
+    width: calc(100vw - 20px);
+  }
+}

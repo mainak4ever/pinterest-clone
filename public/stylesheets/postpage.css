@@ -1,6 +1,6 @@
 .post {
   width: 1000px;
-  height: 1000px;
+  /* height: 1000px; */
   margin: 50px auto;
   /* background: beige; */
   display: flex;
@@ -230,4 +230,23 @@
 }
 .fa-arrow-right-to-bracket {
   transform: rotate(90deg);
+}
+@media (max-width: 1000px) {
+  .post {
+    width: 500px;
+    flex-direction: column;
+  }
+
+  .left-div,
+  .right-div {
+    width: 100%;
+  }
+  .left-div {
+    border-radius: 32px 32px 0 0px;
+  }
+}
+@media (max-width: 500px) {
+  .post {
+    width: calc(100vw - 20px);
+  }
 }
