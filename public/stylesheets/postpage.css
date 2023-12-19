@@ -250,3 +250,6 @@
     width: calc(100vw - 20px);
   }
 }
+.comment .details-holder {
+  width: 85%;
+}
