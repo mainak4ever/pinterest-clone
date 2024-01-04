@@ -29,15 +29,15 @@ This Pinterest Clone seamlessly replicates the quintessential features of Pinter
 - **Personalized Profiles**: Allows users to edit and customize their profiles when authenticated, enhancing personalization and self-expression.
 - **Automatic Profile Picture Generation**: Dynamically generates profile pictures using the "text-to-image" npm package based on user initials upon registration.
 
-#### Refined Search Experience
+### Refined Search Experience
 
 - Discover pins effortlessly using an advanced search functionality, providing precise and tailored results.
 
-#### Efficient Image Handling
+### Efficient Image Handling
 
 - Utilize Multer for optimized image uploads, enhancing user experience and content management.
 
-#### Elegant Page Rendering
+### Elegant Page Rendering
 
 - Employ EJS for sleek and dynamic page display, ensuring a smooth user interface.
 
