@@ -8,14 +8,43 @@ This Pinterest Clone seamlessly replicates the quintessential features of Pinter
 
 ### Unique Features
 
-- **User Interactions**: Post creation, commenting, liking, and following functionalities.
-- **Profile Customization**: Personalize profiles and explore other user profiles.
-- **Tailored Search**: Effortlessly search for pins based on specified criteria.
-- **Automatic Profile Images**: Dynamically generate profile pictures using the "text-to-image" npm package based on user initials.
-- **Secure Authentication**: Implemented with Passport.js for robust user authentication.
-- **Database Models**: Utilizes MongoDB with User and Post models.
-- **Image Handling**: Multer for efficient image upload handling.
-- **Page Rendering**: Employed EJS and `response.render` for streamlined page display.
+### Authentication
+
+- **Signup/Login**: Users can securely create accounts and log in using their credentials.
+- **Passport.js Integration**: Implemented robust authentication mechanisms through Passport.js for enhanced security.
+
+### Pins and Posts Management
+
+- **Create and Upload Pins**: Empowers users to create and upload pins, sharing their content with the community.
+- **Save Pins to Collections**: Provides users with the functionality to save pins to personalized collections or boards for easy access and organization.
+- **Like and Favorite Posts**: Enables users to express appreciation by liking or favoriting posts they enjoy.
+- **Engage via Comments**: Facilitates user interaction by allowing comments on posts, fostering community engagement.
+
+### Social Interaction
+
+- **Follow Users**: Enhances user interaction by enabling the following of other users, enabling a personalized feed of their posts.
+- **Refined Post Search**: Empowers users to conduct refined searches for specific posts using keywords or tags for optimized content discovery.
+
+### Profile Customization
+
+- **Personalized Profiles**: Allows users to edit and customize their profiles when authenticated, enhancing personalization and self-expression.
+- **Automatic Profile Picture Generation**: Dynamically generates profile pictures using the "text-to-image" npm package based on user initials upon registration.
+
+#### Profile Customization
+
+Personalize user profiles with unique details, allowing users to curate their digital presence.
+
+#### Refined Search Experience
+
+Discover pins effortlessly using an advanced search functionality, providing precise and tailored results.
+
+#### Efficient Image Handling
+
+Utilize Multer for optimized image uploads, enhancing user experience and content management.
+
+#### Elegant Page Rendering
+
+Employ EJS for sleek and dynamic page display, ensuring a smooth user interface.
 
 ## Technologies & Stack
 
