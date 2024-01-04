@@ -17,6 +17,26 @@ const upload = require("./multer.js");
 
 const textToImage = require("text-to-image");
 
+let fetch;
+try {
+  fetch = require("node-fetch");
+} catch (err) {
+  if (err.code === "ERR_REQUIRE_ESM") {
+    // If require() fails due to ES Module, use dynamic import
+    import("node-fetch")
+      .then((module) => {
+        fetch = module.default;
+      })
+      .catch((importErr) => {
+        // Handle import error if necessary
+        console.error("Failed to import node-fetch:", importErr);
+      });
+  } else {
+    // Handle other require() errors
+    console.error("Error requiring node-fetch:", err);
+  }
+}
+
 /* GET home page. */
 router.get(
   "/signup",
@@ -190,6 +210,26 @@ router.post(
     res.redirect("/profile");
   }
 );
+
+router.get("/fetch-image", async function (req, res) {
+  const imageUrl = req.query.url;
+
+  try {
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      throw new Error("Failed to fetch the image");
+    }
+
+    const imageBuffer = await response.buffer();
+    const contentType = response.headers.get("content-type");
+
+    res.set("Content-Type", contentType);
+    res.send(imageBuffer);
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    res.status(500).send("Error fetching image");
+  }
+});
 
 router.post(
   "/createpost",

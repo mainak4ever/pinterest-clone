@@ -23,17 +23,70 @@
       src="https://kit.fontawesome.com/b5328c2db7.js"
       crossorigin="anonymous"
     ></script>
-    <script>
-      function previewImage() {
+    <!-- <script>
+      // function previewImageFromFile() {
+      //   var imgPrev = document.querySelector("#imagePreview");
+      //   var uploadBtn = document.querySelector(".upload-btn");
+      //   var file = document.querySelector("input[type=file]").files[0];
+      //   var reader = new FileReader();
+
+      //   reader.onloadend = function () {
+      //     var preview = document.createElement("img");
+      //     preview.src = reader.result;
+      //     preview.setAttribute("alt", "post image");
+      //     var existingImg = imgPrev.querySelector("img");
+      //     if (existingImg) {
+      //       imgPrev.removeChild(existingImg);
+      //     }
+      //     imgPrev.appendChild(preview);
+      //     uploadBtn.style.display = "none";
+      //     imgPrev.style.border = "none";
+      //   };
+
+      //   if (file) {
+      //     reader.readAsDataURL(file);
+      //   } else {
+      //     var existingImg = imgPrev.querySelector("img");
+      //     if (existingImg) {
+      //       imgPrev.removeChild(existingImg);
+      //     }
+      //     uploadBtn.style.display = "flex";
+      //     imgPrev.style.border = "2px dashed rgb(119, 119, 119)";
+      //   }
+      // }
+      function previewImageFromFile() {
+        var file = document.querySelector("input[type=file]").files[0];
+        if (file) {
+          displayImage(file);
+        }
+      }
+
+      function previewImageFromURL() {
+        var imageUrl = prompt("Please enter the image URL:");
+
+        if (imageUrl) {
+          fetch(imageUrl)
+            .then((response) => response.blob())
+            .then((imageBlob) => {
+              displayImage(imageBlob);
+            })
+            .catch((error) => {
+              console.error("Error fetching the image:", error);
+            });
+        }
+      }
+
+      function displayImage(imageBlob) {
         var imgPrev = document.querySelector("#imagePreview");
         var uploadBtn = document.querySelector(".upload-btn");
-        var file = document.querySelector("input[type=file]").files[0];
+
         var reader = new FileReader();
 
         reader.onloadend = function () {
           var preview = document.createElement("img");
           preview.src = reader.result;
           preview.setAttribute("alt", "post image");
+
           var existingImg = imgPrev.querySelector("img");
           if (existingImg) {
             imgPrev.removeChild(existingImg);
@@ -43,18 +96,8 @@
           imgPrev.style.border = "none";
         };
 
-        if (file) {
-          reader.readAsDataURL(file);
-        } else {
-          var existingImg = imgPrev.querySelector("img");
-          if (existingImg) {
-            imgPrev.removeChild(existingImg);
-          }
-          uploadBtn.style.display = "flex";
-          imgPrev.style.border = "2px dashed rgb(119, 119, 119)";
-        }
+        reader.readAsDataURL(imageBlob);
       }
-
       function connectFileInput() {
         var fileInput = document.querySelector("input[type=file]");
         fileInput.click();
@@ -63,6 +106,76 @@
       function connectSubmit() {
         var submit = document.querySelector("#submit");
         submit.click();
+      }
+    </script> -->
+    <script>
+      function previewImageFromURL() {
+        var imageUrl = prompt("Please enter the image URL:");
+
+        if (imageUrl) {
+          fetch(`/fetch-image?url=${encodeURIComponent(imageUrl)}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.blob();
+            })
+            .then((imageBlob) => {
+              displayImage(imageBlob);
+              // Set the fetched image as a file in the hidden input field
+              var hiddenInput = document.querySelector("input[type=file]");
+              var file = new File([imageBlob], "fetched_image.jpeg", {
+                type: "image/jpeg",
+              });
+
+              // Remove existing files and add the new file
+              hiddenInput.files = new FileList([file]);
+            })
+            .catch((error) => {
+              console.error("Error fetching the image:", error);
+            });
+        }
+      }
+
+      function displayImage(imageBlob) {
+        var imgPrev = document.querySelector("#imagePreview");
+        var uploadBtn = document.querySelector(".upload-btn");
+
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+          var preview = document.createElement("img");
+          preview.src = reader.result;
+          preview.setAttribute("alt", "post image");
+
+          var existingImg = imgPrev.querySelector("img");
+          if (existingImg) {
+            imgPrev.removeChild(existingImg);
+          }
+          imgPrev.appendChild(preview);
+          uploadBtn.style.display = "none";
+          imgPrev.style.border = "none";
+        };
+
+        reader.readAsDataURL(imageBlob);
+      }
+
+      function connectFileInput() {
+        var fileInput = document.querySelector("input[type=file]");
+        fileInput.click();
+      }
+
+      function previewImageFromFile() {
+        var file = document.querySelector("input[type=file]").files[0];
+        if (file) {
+          displayImage(file);
+        }
+      }
+
+      function connectSubmit() {
+        console.log("Submit button clicked");
+        var form = document.querySelector("form");
+        form.submit();
       }
     </script>
   </head>
@@ -122,7 +235,9 @@
 
           <hr />
 
-          <button class="img-url">Save from URL</button>
+          <button class="img-url" onclick="previewImageFromURL()">
+            Save from URL
+          </button>
         </div>
         <div class="details">
           <form
@@ -134,7 +249,7 @@
               type="file"
               name="image"
               accept="image/*"
-              onchange="previewImage()"
+              onchange="previewImageFromFile()"
               style="display: none"
             />
             <div class="form-group">
