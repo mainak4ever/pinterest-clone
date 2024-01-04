@@ -23,16 +23,11 @@ This Pinterest Clone seamlessly replicates the quintessential features of Pinter
 ### Social Interaction
 
 - **Follow Users**: Enhances user interaction by enabling the following of other users, enabling a personalized feed of their posts.
-- **Refined Post Search**: Empowers users to conduct refined searches for specific posts using keywords or tags for optimized content discovery.
 
 ### Profile Customization
 
 - **Personalized Profiles**: Allows users to edit and customize their profiles when authenticated, enhancing personalization and self-expression.
 - **Automatic Profile Picture Generation**: Dynamically generates profile pictures using the "text-to-image" npm package based on user initials upon registration.
-
-#### Profile Customization
-
-Personalize user profiles with unique details, allowing users to curate their digital presence.
 
 #### Refined Search Experience
 
